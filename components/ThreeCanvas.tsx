@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import * as THREE from "three";
+import { BoxGeometry, Color } from "three";
+import { threeOptions, CameraOptions, RendererOptions, BasicGeometry, GeometryOptions, MaterialOptions, EnvMaps, MeshBasicMaterialOptions, MeshMatcapMaterialOptions, MeshNormalMaterialOptions, MeshPhongMaterialOptions, MeshPhysicalMaterialOptions, MeshStandardMaterialOptions, GradientMap, MeshToonMaterialOptions } from "OptionTypes";
+
 
 let camera: THREE.Camera, scene: THREE.Scene, renderer: THREE.WebGLRenderer;
 let geometry: THREE.BoxGeometry, material: THREE.Material, mesh: THREE.Mesh;
 
-function init() {
+function init(cameraOpts: CameraOptions, geometryOpts: GeometryOptions, renderOpts: RendererOptions) {
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
     camera.position.z = 1;
 
@@ -41,7 +44,7 @@ function resizeCanvas() {
     console.log(`resized to: ${window.innerWidth} ${window.innerHeight}`)
 }
 
-const ThreeCanvas: React.FC = () => {
+const ThreeCanvas: React.FC<threeOptions> = (threeOptions) => {
     
     useEffect(() => {
         init();
