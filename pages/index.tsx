@@ -2,8 +2,13 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import ThreeCanvas from '../components/ThreeCanvas'
+import GeometryForm from '../components/GeometryForm'
+import { CanvasGeometryContext } from '../contexts/GeometryContext'
+import { useState } from 'react'
 
 const Home: NextPage = () => {
+    const [geometry, setGeometry] = useState<string>("BoxGeometry");
+
     return (
         <div>
             <Head>
@@ -22,8 +27,11 @@ const Home: NextPage = () => {
                 <meta property="twitter:description" content="The homepage of the Three-JS Playground" />
                 <meta property="twitter:image" content="" />
             </Head>
-            <main>
-              <ThreeCanvas />
+            <main className="relative">
+                <CanvasGeometryContext.Provider value={{ geometry, setGeometry }}>
+                    <GeometryForm />
+                    <ThreeCanvas />
+                </CanvasGeometryContext.Provider>
             </main>
         </div>
     )
