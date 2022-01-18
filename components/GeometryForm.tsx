@@ -31,7 +31,6 @@ const GeometryForm: React.FC = () => {
                         <option value="ConeGeometry">Cone</option>
                         <option value="CylinderGeometry">Cylinder</option>
                         <option value="DodecahedronGeometry">Dodecahedron</option>
-                        <option value="ExtrudeGeometry">Extrude</option>
                         <option value="IcosahedronGeometry">Icosahedron</option>
                         <option value="LatheGeometry">Lathe</option>
                         <option value="OctahedronGeometry">Octahedron</option>
