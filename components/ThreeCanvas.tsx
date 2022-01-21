@@ -33,7 +33,7 @@ function init(geometry: string) {
 
     let geometryToRender;
 
-    if(geometry === "BoxGeometry") {
+    if (geometry === "BoxGeometry") {
         geometryToRender = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
     } else if (geometry === "CircleGeometry") {
         geometryToRender = new THREE.CircleGeometry( .5, 32, 0, 2*Math.PI );

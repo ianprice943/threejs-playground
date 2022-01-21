@@ -1,12 +1,10 @@
 import React, { FormEvent, useState, useRef } from "react";
 import Draggable from "react-draggable";
 import { useGeometryContext } from "../contexts/GeometryContext";
-// import { threeOptions, CameraOptions, RendererOptions, BasicGeometry, GeometryOptions, MaterialOptions, EnvMaps, MeshBasicMaterialOptions, MeshMatcapMaterialOptions, MeshNormalMaterialOptions, MeshPhongMaterialOptions, MeshPhysicalMaterialOptions, MeshStandardMaterialOptions, GradientMap, MeshToonMaterialOptions } from "OptionTypes";
+import BoxOptions from "./BoxOptions";
 
 const GeometryForm: React.FC = () => {
     const { geometry, setGeometry } = useGeometryContext();
-
-    console.log(geometry);
 
     const formRef = useRef(null);
 
@@ -20,9 +18,15 @@ const GeometryForm: React.FC = () => {
         setGeometry(formData.geometry as string);
     }
 
+    let geometryOptions;
+
+    if (geometry === "BoxGeometry") {
+        geometryOptions = <BoxOptions />
+    }
+
     return (
         <Draggable nodeRef={formRef}>
-            <form ref={formRef} onChange={handleFormInput} className="absolute p-2 bg-slate-400 bg-opacity-70 hover:cursor-pointer">
+            <form ref={formRef} onChange={handleFormInput} className="absolute flex flex-col p-2 bg-slate-400 bg-opacity-70 hover:cursor-pointer">
                 <div>
                     <label htmlFor="geometry">Geometry: </label>
                     <select name="geometry" id="">
@@ -42,6 +46,7 @@ const GeometryForm: React.FC = () => {
                         <option value="TorusKnotGeometry">Torus Knot</option>
                         <option value="TubeGeometry">Tube</option>
                     </select>
+                    {geometryOptions}
                 </div>
             </form>
         </Draggable>
