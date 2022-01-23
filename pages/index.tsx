@@ -3,11 +3,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import ThreeCanvas from '../components/ThreeCanvas'
 import GeometryForm from '../components/GeometryForm'
-import { CanvasGeometryContext } from '../contexts/GeometryContext'
+import { CanvasGeometryContext, CanvasFormOptionsContext } from '../contexts/GeometryContext'
 import { useState } from 'react'
 
 const Home: NextPage = () => {
     const [geometry, setGeometry] = useState<string>("BoxGeometry");
+    const [formOptions, setFormOptions] = useState<any>({});
 
     return (
         <div>
@@ -29,8 +30,10 @@ const Home: NextPage = () => {
             </Head>
             <main className="relative">
                 <CanvasGeometryContext.Provider value={{ geometry, setGeometry }}>
-                    <GeometryForm />
-                    <ThreeCanvas />
+                   <CanvasFormOptionsContext.Provider value={{ formOptions, setFormOptions }}>
+                        <GeometryForm />
+                        <ThreeCanvas />
+                   </CanvasFormOptionsContext.Provider>
                 </CanvasGeometryContext.Provider>
             </main>
         </div>

@@ -14,30 +14,18 @@ export const useGeometryContext = () => useContext(CanvasGeometryContext);
 
 // need to figure out how to create multiple contexts
 
-export interface BoxOptions {
-    width: number,
-    height: number,
-    depth: number,
-    widthSegments: number,
-    heightSegments: number,
-    depthSegments: number
+export interface FormOptions {
+    [key: string]: any
 }
 
-export type BoxOptionsContext = {
-    boxOptions: BoxOptions,
-    setBoxOptions: (newBoxOptions: BoxOptions) => void
+export type FormOptionsContext = {
+    formOptions: FormOptions,
+    setFormOptions: (newFormOptions: FormOptions) => void
 }
 
-export const CanvasBoxOptionsContext = React.createContext<BoxOptionsContext>({
-    boxOptions: { 
-        width: 1,
-        height: 1,
-        depth: 1,
-        widthSegments: 1,
-        heightSegments: 1,
-        depthSegments: 1
-    },
-    setBoxOptions: () => {}
+export const CanvasFormOptionsContext = React.createContext<FormOptionsContext>({
+    formOptions: {},
+    setFormOptions: () => {}
 });
 
-export const useGemetryOptionsContext = () => useContext(CanvasBoxOptionsContext);
+export const useFormOptionsContext = () => useContext(CanvasFormOptionsContext);

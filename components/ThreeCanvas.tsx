@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import * as THREE from "three";
 import { BoxGeometry, Color } from "three";
-import { useGeometryContext } from "../contexts/GeometryContext";
+import { useGeometryContext, useFormOptionsContext } from "../contexts/GeometryContext";
 // import { threeOptions, CameraOptions, RendererOptions, BasicGeometry, GeometryOptions, MaterialOptions, EnvMaps, MeshBasicMaterialOptions, MeshMatcapMaterialOptions, MeshNormalMaterialOptions, MeshPhongMaterialOptions, MeshPhysicalMaterialOptions, MeshStandardMaterialOptions, GradientMap, MeshToonMaterialOptions } from "OptionTypes";
 
 class CustomSinCurve extends THREE.Curve<THREE.Vector3> {
@@ -25,7 +25,7 @@ class CustomSinCurve extends THREE.Curve<THREE.Vector3> {
 let camera: THREE.Camera, scene: THREE.Scene, renderer: THREE.WebGLRenderer;
 let geometry: any, material: THREE.Material, mesh: THREE.Mesh;
 
-function init(geometry: string) {
+function init(geometry: string, formOptions: any) {
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
     camera.position.z = 1;
 
@@ -34,7 +34,7 @@ function init(geometry: string) {
     let geometryToRender;
 
     if (geometry === "BoxGeometry") {
-        geometryToRender = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
+        geometryToRender = new THREE.BoxGeometry( shrinkValue(formOptions.width), shrinkValue(formOptions.height), shrinkValue(formOptions.depth), formOptions.widthSegments, formOptions.heightSegments, formOptions.depthSegments );
     } else if (geometry === "CircleGeometry") {
         geometryToRender = new THREE.CircleGeometry( .5, 32, 0, 2*Math.PI );
     } else if (geometry === "ConeGeometry") {
@@ -101,12 +101,17 @@ function resizeCanvas() {
     console.log(`resized to: ${window.innerWidth} ${window.innerHeight}`)
 }
 
+function shrinkValue(value:string): number {
+        return (parseInt(value) / 10);
+}
+
 const ThreeCanvas: React.FC = () => {
 
     const { geometry } = useGeometryContext();
+    const { formOptions } = useFormOptionsContext();
     
     useEffect(() => {
-        init(geometry);
+        init(geometry, formOptions);
     });
 
     // const delta = 200;

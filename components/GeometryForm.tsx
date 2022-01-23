@@ -1,10 +1,11 @@
 import React, { FormEvent, useState, useRef } from "react";
 import Draggable from "react-draggable";
-import { useGeometryContext } from "../contexts/GeometryContext";
+import { useGeometryContext, useFormOptionsContext } from "../contexts/GeometryContext";
 import BoxOptions from "./BoxOptions";
 
 const GeometryForm: React.FC = () => {
     const { geometry, setGeometry } = useGeometryContext();
+    const { formOptions, setFormOptions } = useFormOptionsContext();
 
     const formRef = useRef(null);
 
@@ -16,6 +17,7 @@ const GeometryForm: React.FC = () => {
 
         console.log(formData);
         setGeometry(formData.geometry as string);
+        setFormOptions(formData);
     }
 
     let geometryOptions;
