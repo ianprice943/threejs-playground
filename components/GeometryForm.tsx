@@ -10,7 +10,7 @@ const GeometryForm: React.FC = () => {
     const { formOptions, setFormOptions } = useFormOptionsContext();
     const geometry = formOptions.geometry;
 
-    const formRef = useRef(null);
+    const formRef = useRef<HTMLFormElement>(null);
 
     const handleFormInput = (event: FormEvent) => {
         event.preventDefault();
@@ -18,8 +18,43 @@ const GeometryForm: React.FC = () => {
         const formEntries = new FormData(formEl);
         const formData = Object.fromEntries(formEntries.entries());
 
-        //setGeometry(formData.geometry as string);
-        setFormOptions(formData);
+        if(formData.geometry !== geometry) {
+            const newGeometryData = setDefaults(formData.geometry.toString());
+            setFormOptions(newGeometryData);
+        } else {
+            setFormOptions(formData);
+        }
+    }
+
+    const setDefaults = (geometry: string) => {
+        if (geometry === "BoxGeometry") {
+            return {
+                geometry: "BoxGeometry",
+                width: "1",
+                height: "1",
+                depth: "1",
+                widthSegments: "1",
+                heightSegments: "1",
+                depthSegments: "1"
+            }
+        } else if (geometry === "CircleGeometry") {
+            return {
+                geometry: "CircleGeometry",
+                radius: "1",
+                segments: "1"
+            }
+        } else if (geometry === "ConeGeometry") {
+            return {
+                geometry: "ConeGeometry",
+                radius: "1",
+                height: "1",
+                radialSegments: "1",
+                heightSegments: "1",
+                openEnded: "false"
+            }
+        } else {
+            return {}
+        }
     }
 
     let geometryOptions;

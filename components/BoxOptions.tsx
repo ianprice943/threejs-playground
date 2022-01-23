@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NumberInput from "./NumberInput";
 
 const BoxOptions: React.FC = () => {
+
     return (
         <>
             <NumberInput dimension="width" min={1} max={5} />
