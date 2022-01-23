@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import * as THREE from "three";
-import { BoxGeometry, Color } from "three";
 import { useGeometryContext, useFormOptionsContext } from "../contexts/GeometryContext";
-// import { threeOptions, CameraOptions, RendererOptions, BasicGeometry, GeometryOptions, MaterialOptions, EnvMaps, MeshBasicMaterialOptions, MeshMatcapMaterialOptions, MeshNormalMaterialOptions, MeshPhongMaterialOptions, MeshPhysicalMaterialOptions, MeshStandardMaterialOptions, GradientMap, MeshToonMaterialOptions } from "OptionTypes";
 
 class CustomSinCurve extends THREE.Curve<THREE.Vector3> {
     scale: number;
@@ -32,13 +30,14 @@ function init(geometry: string, formOptions: any) {
     scene = new THREE.Scene();
 
     let geometryToRender;
+    console.log(formOptions);
 
     if (geometry === "BoxGeometry") {
-        geometryToRender = new THREE.BoxGeometry( shrinkValue(formOptions.width), shrinkValue(formOptions.height), shrinkValue(formOptions.depth), formOptions.widthSegments, formOptions.heightSegments, formOptions.depthSegments );
+        geometryToRender = new THREE.BoxGeometry( shrinkValue(formOptions.width), shrinkValue(formOptions.height), shrinkValue(formOptions.depth), parseInt(formOptions.widthSegments), parseInt(formOptions.heightSegments), parseInt(formOptions.depthSegments));
     } else if (geometry === "CircleGeometry") {
-        geometryToRender = new THREE.CircleGeometry( .5, 32, 0, 2*Math.PI );
+        geometryToRender = new THREE.CircleGeometry( shrinkValue(formOptions.radius), parseInt(formOptions.segments), 0, 2*Math.PI );
     } else if (geometry === "ConeGeometry") {
-        geometryToRender = new THREE.ConeGeometry( .2, .5, 20, 1, false, 0, 2*Math.PI );  
+        geometryToRender = new THREE.ConeGeometry( shrinkValue(formOptions.radius), shrinkValue(formOptions.height), 20, 1, formOptions.openEnded, 0, 2*Math.PI );  
     } else if (geometry === "CylinderGeometry") {
         geometryToRender = new THREE.CylinderGeometry( .2, .2, .7, 20, 1, false, 0, 2*Math.PI );  
     } else if (geometry === "DodecahedronGeometry") {
@@ -107,8 +106,9 @@ function shrinkValue(value:string): number {
 
 const ThreeCanvas: React.FC = () => {
 
-    const { geometry } = useGeometryContext();
+    //const { geometry } = useGeometryContext();
     const { formOptions } = useFormOptionsContext();
+    const geometry = formOptions.geometry;
     
     useEffect(() => {
         init(geometry, formOptions);

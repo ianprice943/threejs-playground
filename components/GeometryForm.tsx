@@ -2,10 +2,13 @@ import React, { FormEvent, useState, useRef } from "react";
 import Draggable from "react-draggable";
 import { useGeometryContext, useFormOptionsContext } from "../contexts/GeometryContext";
 import BoxOptions from "./BoxOptions";
+import CircleOptions from "./CircleOptions";
+import ConeOptions from "./ConeOptions";
 
 const GeometryForm: React.FC = () => {
-    const { geometry, setGeometry } = useGeometryContext();
+    //const { geometry, setGeometry } = useGeometryContext();
     const { formOptions, setFormOptions } = useFormOptionsContext();
+    const geometry = formOptions.geometry;
 
     const formRef = useRef(null);
 
@@ -15,8 +18,7 @@ const GeometryForm: React.FC = () => {
         const formEntries = new FormData(formEl);
         const formData = Object.fromEntries(formEntries.entries());
 
-        console.log(formData);
-        setGeometry(formData.geometry as string);
+        //setGeometry(formData.geometry as string);
         setFormOptions(formData);
     }
 
@@ -24,6 +26,10 @@ const GeometryForm: React.FC = () => {
 
     if (geometry === "BoxGeometry") {
         geometryOptions = <BoxOptions />
+    } else if (geometry === "CircleGeometry") {
+        geometryOptions = <CircleOptions />
+    } else if (geometry === "ConeGeometry") {
+        geometryOptions = <ConeOptions />
     }
 
     return (

@@ -12,8 +12,6 @@ export const CanvasGeometryContext = React.createContext<GeometryContext>({
 
 export const useGeometryContext = () => useContext(CanvasGeometryContext);
 
-// need to figure out how to create multiple contexts
-
 export interface FormOptions {
     [key: string]: any
 }

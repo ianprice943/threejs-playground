@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 const Home: NextPage = () => {
     const [geometry, setGeometry] = useState<string>("BoxGeometry");
-    const [formOptions, setFormOptions] = useState<any>({});
+    const [formOptions, setFormOptions] = useState<any>({geometry: "BoxGeometry", width: 1, height: 1, depth: 1});
 
     return (
         <div>
@@ -29,12 +29,12 @@ const Home: NextPage = () => {
                 <meta property="twitter:image" content="" />
             </Head>
             <main className="relative">
-                <CanvasGeometryContext.Provider value={{ geometry, setGeometry }}>
+                {/* <CanvasGeometryContext.Provider value={{ geometry, setGeometry }}> */}
                    <CanvasFormOptionsContext.Provider value={{ formOptions, setFormOptions }}>
                         <GeometryForm />
                         <ThreeCanvas />
                    </CanvasFormOptionsContext.Provider>
-                </CanvasGeometryContext.Provider>
+                {/* </CanvasGeometryContext.Provider> */}
             </main>
         </div>
     )
