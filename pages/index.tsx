@@ -29,8 +29,10 @@ const Home: NextPage = () => {
                 <meta property="twitter:description" content="The homepage of Ian Price's Three-JS Playground" />
                 <meta property="twitter:image" content="" />
             </Head>
-            <main className="relative">
+            <header>
                 <h1 className="text-center text-lg bg-black text-white w-screen">A Small Three.js Playground by Ian Price</h1>
+            </header>
+            <main className="relative">
                 <CanvasFormOptionsContext.Provider value={{ formOptions, setFormOptions }}>
                     <CanvasWireframeContext.Provider value={{ wireframe, setWireframe }}>
                         <GeometryForm />
@@ -38,6 +40,9 @@ const Home: NextPage = () => {
                     </CanvasWireframeContext.Provider>
                 </CanvasFormOptionsContext.Provider>
             </main>
+            <footer className="text-center absolute left-0 right-0 bottom-0">
+                <p className="text-white">Check the code out here: <a className="underline" href="https://github.com/ianprice943/threejs-playground">https://github.com/ianprice943/threejs-playground</a></p>
+            </footer>
         </div>
     )
 }
