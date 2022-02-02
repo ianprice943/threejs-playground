@@ -30,6 +30,7 @@ const Home: NextPage = () => {
                 <meta property="twitter:image" content="" />
             </Head>
             <main className="relative">
+                <h1 className="text-center text-lg bg-black text-white w-screen">A Small Three.js Playground by Ian Price</h1>
                 <CanvasFormOptionsContext.Provider value={{ formOptions, setFormOptions }}>
                     <CanvasWireframeContext.Provider value={{ wireframe, setWireframe }}>
                         <GeometryForm />

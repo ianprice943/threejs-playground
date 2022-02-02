@@ -86,7 +86,7 @@ function init(geometry: string, formOptions: any, wireframe: boolean) {
         antialias: true,
         canvas: canvas
     });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(window.innerWidth * .98, window.innerHeight * .95);
     renderer.setAnimationLoop( animation );
 }
 
@@ -95,13 +95,6 @@ function animation(time: number) {
     mesh.rotation.y = time / 1000;
 
     renderer.render( scene, camera );
-}
-
-function resizeCanvas() {
-    
-    // renderer.dispose();
-    // init();
-    console.log(`resized to: ${window.innerWidth} ${window.innerHeight}`)
 }
 
 function shrinkValue(value:string): number {
@@ -118,15 +111,21 @@ const ThreeCanvas = () => {
         init(geometry, formOptions, wireframe);
     });
 
-    // const delta = 200;
-    // let resize: any;
-    // window.addEventListener('resize', () => {
-    //     clearTimeout(resize);
-    //     resize = setTimeout(resizeCanvas, delta);
-    // });
+    const resizeCanvas = () => {
+        renderer.dispose();
+        init(geometry, formOptions, wireframe);
+        console.log(`resized to: ${window.innerWidth * .98} ${window.innerHeight * .95}`);
+    }
+
+    const delta = 200;
+    let resize: any;
+    window.addEventListener('resize', () => {
+        clearTimeout(resize);
+        resize = setTimeout(resizeCanvas, delta);
+    });
     
     return (
-        <div>
+        <div className="flex justify-center align-middle">
             <canvas id="renderWindow"></canvas>
         </div>
     )
