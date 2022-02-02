@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 const Home: NextPage = () => {
     const [geometry, setGeometry] = useState<string>("BoxGeometry");
-    const [formOptions, setFormOptions] = useState<any>({geometry: "BoxGeometry", width: 1, height: 1, depth: 1});
+    const [formOptions, setFormOptions] = useState<any>({geometry: "BoxGeometry", wireframe: false, width: 1, height: 1, depth: 1, widthSegments: 1, heightSegments: 1, depthSegments: 1});
 
     return (
         <div>

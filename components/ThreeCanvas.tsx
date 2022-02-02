@@ -37,21 +37,21 @@ function init(geometry: string, formOptions: any) {
     } else if (geometry === "CircleGeometry") {
         geometryToRender = new THREE.CircleGeometry( shrinkValue(formOptions.radius), parseInt(formOptions.segments), 0, 2*Math.PI );
     } else if (geometry === "ConeGeometry") {
-        geometryToRender = new THREE.ConeGeometry( shrinkValue(formOptions.radius), shrinkValue(formOptions.height), 20, 1, formOptions.openEnded, 0, 2*Math.PI );  
+        geometryToRender = new THREE.ConeGeometry( shrinkValue(formOptions.radius), shrinkValue(formOptions.height), parseInt(formOptions.radialSegments), parseInt(formOptions.heightSegments), false, 0, 2*Math.PI );  
     } else if (geometry === "CylinderGeometry") {
-        geometryToRender = new THREE.CylinderGeometry( .2, .2, .7, 20, 1, false, 0, 2*Math.PI );  
+        geometryToRender = new THREE.CylinderGeometry( shrinkValue(formOptions.radiusTop), shrinkValue(formOptions.radiusBottom), shrinkValue(formOptions.height), parseInt(formOptions.radialSegments), parseInt(formOptions.heightSegments), false, 0, 2*Math.PI );  
     } else if (geometry === "DodecahedronGeometry") {
-        geometryToRender = new THREE.DodecahedronGeometry( .2, 0 );  
+        geometryToRender = new THREE.DodecahedronGeometry( shrinkValue(formOptions.radius), parseInt(formOptions.detail) );  
     } else if (geometry === "IcosahedronGeometry") {
-        geometryToRender = new THREE.IcosahedronGeometry( .2, 0 );  
+        geometryToRender = new THREE.IcosahedronGeometry( shrinkValue(formOptions.radius), parseInt(formOptions.detail) );  
     } else if (geometry === "LatheGeometry") {
         const lathePoints = [];
         for ( let i = 0; i < 10; i ++ ) {
 	        lathePoints.push( new THREE.Vector2( Math.sin( i * 0.05 ) * .25 + .025, ( i - .05 ) * .05 ) );
         }
-        geometryToRender = new THREE.LatheGeometry( lathePoints, 15, 0, 2*Math.PI );  
+        geometryToRender = new THREE.LatheGeometry( lathePoints, formOptions.segments, 0, 2*Math.PI );  
     } else if (geometry === "OctahedronGeometry") {
-        geometryToRender = new THREE.OctahedronGeometry( .2, 0 );  
+        geometryToRender = new THREE.OctahedronGeometry( shrinkValue(formOptions.radius), parseInt(formOptions.detail) );  
     } else if (geometry === "PlaneGeometry") {
         geometryToRender = new THREE.PlaneGeometry( .5, .5, 4, 4 );  
     } else if (geometry === "RingGeometry") {
@@ -71,7 +71,13 @@ function init(geometry: string, formOptions: any) {
         console.log("context failed?: ", geometry);
     }
 
-    material = new THREE.MeshNormalMaterial();
+    const useWireframe: boolean = (formOptions?.wireframe === 'on');
+
+    const materialOptions = {
+        wireframe: useWireframe
+    }
+
+    material = new THREE.MeshNormalMaterial(materialOptions);
 
     mesh = new THREE.Mesh( geometryToRender, material );
     scene.add( mesh );

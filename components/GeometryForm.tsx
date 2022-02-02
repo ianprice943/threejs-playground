@@ -2,8 +2,14 @@ import React, { FormEvent, useState, useRef } from "react";
 import Draggable from "react-draggable";
 import { useGeometryContext, useFormOptionsContext } from "../contexts/GeometryContext";
 import BoxOptions from "./BoxOptions";
+import CheckboxInput from "./CheckboxInput";
 import CircleOptions from "./CircleOptions";
 import ConeOptions from "./ConeOptions";
+import CylinderOptions from "./CylinderOptions";
+import DodecahedronOptions from "./DodecahedronOptions";
+import IcosahedronOptions from "./IcosahedronOptions";
+import OctahedronOptions from "./IcosahedronOptions copy";
+import LatheOptions from "./LatheOptions";
 
 const GeometryForm: React.FC = () => {
     //const { geometry, setGeometry } = useGeometryContext();
@@ -30,6 +36,7 @@ const GeometryForm: React.FC = () => {
         if (geometry === "BoxGeometry") {
             return {
                 geometry: "BoxGeometry",
+                wireframe: false,
                 width: "1",
                 height: "1",
                 depth: "1",
@@ -40,17 +47,57 @@ const GeometryForm: React.FC = () => {
         } else if (geometry === "CircleGeometry") {
             return {
                 geometry: "CircleGeometry",
+                wireframe: false,
                 radius: "1",
-                segments: "1"
+                segments: "32"
             }
         } else if (geometry === "ConeGeometry") {
             return {
                 geometry: "ConeGeometry",
+                wireframe: false,
                 radius: "1",
                 height: "1",
-                radialSegments: "1",
+                radialSegments: "32",
                 heightSegments: "1",
                 openEnded: "false"
+            }
+        } else if(geometry === "CylinderGeometry") {
+            return {
+                geometry: "CylinderGeometry",
+                wireframe: false,
+                radiusTop: "1",
+                radiusBottom: "1",
+                height: "2",
+                radialSegments: "32",
+                heightSegments: "1",
+                openEnded: "false"
+            }  
+        } else if (geometry === "DodecahedronGeometry") {
+            return {
+                geometry: "DodecahedronGeometry",
+                wireframe: false,
+                radius: "1",
+                detail: "0"
+            }
+        } else if (geometry === "IcosahedronGeometry") {
+            return {
+                geometry: "IcosahedronGeometry",
+                wireframe: false,
+                radius: "1",
+                detail: "0"
+            }
+        } else if (geometry === "LatheGeometry") {
+            return {
+                geometry: "LatheGeometry",
+                wireframe: false,
+                segments: "32",
+            }
+        } else if (geometry === "OctahedronGeometry") {
+            return {
+                geometry: "OctahedronGeometry",
+                wireframe: false,
+                radius: "1",
+                detail: "0"
             }
         } else {
             return {}
@@ -65,6 +112,16 @@ const GeometryForm: React.FC = () => {
         geometryOptions = <CircleOptions />
     } else if (geometry === "ConeGeometry") {
         geometryOptions = <ConeOptions />
+    } else if (geometry === "CylinderGeometry") {
+        geometryOptions = <CylinderOptions />
+    } else if (geometry === "DodecahedronGeometry") {
+        geometryOptions = <DodecahedronOptions />
+    } else if (geometry === "IcosahedronGeometry") {
+        geometryOptions = <IcosahedronOptions />
+    } else if (geometry === "LatheGeometry") {
+        geometryOptions = <LatheOptions />
+    } else if (geometry === "OctahedronGeometry") {
+        geometryOptions = <OctahedronOptions />
     }
 
     return (
@@ -89,6 +146,7 @@ const GeometryForm: React.FC = () => {
                         <option value="TorusKnotGeometry">Torus Knot</option>
                         <option value="TubeGeometry">Tube</option>
                     </select>
+                    <CheckboxInput label="wireframe" isChecked={false} />
                     {geometryOptions}
                 </div>
             </form>
