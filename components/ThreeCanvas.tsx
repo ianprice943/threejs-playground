@@ -39,8 +39,6 @@ function init(geometry: string, formOptions: any, wireframe: boolean) {
         }
     }
     
-    console.log(convertedFormOptions);
-
     let geometryToRender;
 
     if (geometry === "BoxGeometry") {
@@ -121,7 +119,6 @@ const ThreeCanvas = () => {
     const resizeCanvas = () => {
         renderer.dispose();
         init(geometry, formOptions, wireframe);
-        console.log(`resized to: ${window.innerWidth * .98} ${window.innerHeight * .92}`);
     }
 
     const delta = 200;
