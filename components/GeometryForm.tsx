@@ -11,6 +11,12 @@ import OctahedronOptions from "./PlaneOptions";
 import LatheOptions from "./LatheOptions";
 import PlaneOptions from "./PlaneOptions";
 import WireframeButtons from "./WireframeButtons";
+import RingOptions from "./RingOptions";
+import SphereOptions from "./SphereOptions";
+import TetrahedronOptions from "./TetrahedronOptions";
+import TorusOptions from "./TorusOptions";
+import TorusKnotOptions from "./TorusKnotOptions";
+import TubeOptions from "./TubeOptions";
 
 const GeometryForm = () => {
     const { formOptions, setFormOptions } = useFormOptionsContext();
@@ -99,6 +105,52 @@ const GeometryForm = () => {
                 widthSegments: "16",
                 heightSegments: "16"
             }
+        } else if (geometry === "RingGeometry") {
+            return {
+                geometry: "RingGeometry",
+                innerRadius: "1",
+                outerRadius: "2",
+                thetaSegments: "32",
+                phiSegments: "8"
+            }
+        } else if (geometry === "SphereGeometry") {
+            return {
+                geometry: "SphereGeometry",
+                radius: "1",
+                widthSegments: "32",
+                heightSegments: "16"
+            }
+        } else if (geometry === "TetrahedronGeometry") {
+            return {
+                geometry: "TetrahedronGeometry",
+                radius: "1",
+                detail: "0"
+            }
+        } else if (geometry === "TorusGeometry") {
+            return {
+                geometry: "TorusGeometry",
+                radius: "2",
+                tube: "1",
+                radialSegments: "16",
+                tubularSegments: "32"
+            }
+        } else if (geometry === "TorusKnotGeometry") {
+            return {
+                geometry: "TorusKnotGeometry",
+                radius: "2",
+                tube: "1",
+                tubularSegments: "32",
+                radialSegments: "8",
+                p: "2",
+                q: "3"
+            }
+        } else if (geometry === "TubeGeometry") {
+            return {
+                geometry: "TubeGeometry",
+                tubularSegments: "32",
+                radius: "1",
+                radialSegments: "8",
+            }
         } else {
             return {}
         }
@@ -124,7 +176,19 @@ const GeometryForm = () => {
         geometryOptions = <OctahedronOptions />
     } else if (geometry === "PlaneGeometry") {
         geometryOptions = <PlaneOptions />
-    } 
+    } else if (geometry === "RingGeometry") {
+        geometryOptions = <RingOptions />
+    } else if (geometry === "SphereGeometry") {
+        geometryOptions = <SphereOptions />
+    } else if (geometry === "TetrahedronGeometry") {
+        geometryOptions = <TetrahedronOptions />
+    } else if (geometry === "TorusGeometry") {
+        geometryOptions = <TorusOptions />
+    } else if (geometry === "TorusKnotGeometry") {
+        geometryOptions = <TorusKnotOptions />
+    } else if (geometry === "TubeGeometry") {
+        geometryOptions = <TubeOptions />
+    }
 
     const formRef = useRef<HTMLFormElement>(null!);
     const buttonRef = useRef<HTMLButtonElement>(null!);

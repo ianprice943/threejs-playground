@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 const Home: NextPage = () => {
     const [geometry, setGeometry] = useState<string>("BoxGeometry");
-    const [formOptions, setFormOptions] = useState<any>({geometry: "BoxGeometry", wireframe: false, width: 1, height: 1, depth: 1, widthSegments: 1, heightSegments: 1, depthSegments: 1});
+    const [formOptions, setFormOptions] = useState<any>({geometry: "BoxGeometry", width: 1, height: 1, depth: 1, widthSegments: 1, heightSegments: 1, depthSegments: 1});
     const [wireframe, setWireframe] = useState<boolean>(false);
 
     return (
@@ -21,12 +21,12 @@ const Home: NextPage = () => {
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content="" />
                 <meta property="og:title" content="Three-JS Playground - Home" />
-                <meta property="og:description" content="The homepage of the Three-JS Playground" />
+                <meta property="og:description" content="The homepage of Ian Price's Three-JS Playground" />
                 <meta property="og:image" content="" />
                 <meta property="twitter:card" content="summary_large_image" />
                 <meta property="twitter:url" content="" />
                 <meta property="twitter:title" content="Three-JS Playground - Home" />
-                <meta property="twitter:description" content="The homepage of the Three-JS Playground" />
+                <meta property="twitter:description" content="The homepage of Ian Price's Three-JS Playground" />
                 <meta property="twitter:image" content="" />
             </Head>
             <main className="relative">

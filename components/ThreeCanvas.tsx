@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import * as THREE from "three";
 import { useFormOptionsContext, useWireframeContext } from "../contexts/GeometryContext";
+import { parse } from "path/posix";
 
 class CustomSinCurve extends THREE.Curve<THREE.Vector3> {
     scale: number;
@@ -55,18 +56,18 @@ function init(geometry: string, formOptions: any, wireframe: boolean) {
     } else if (geometry === "PlaneGeometry") {
         geometryToRender = new THREE.PlaneGeometry( shrinkValue(formOptions.width), shrinkValue(formOptions.height), parseInt(formOptions.widthSegments), parseInt(formOptions.heightSegments) );  
     } else if (geometry === "RingGeometry") {
-        geometryToRender = new THREE.RingGeometry( .2, .4, 32, 32, 0, 2*Math.PI );  
+        geometryToRender = new THREE.RingGeometry( shrinkValue(formOptions.innerRadius), shrinkValue(formOptions.outerRadius), parseInt(formOptions.thetaSegments), parseInt(formOptions.phiSegments), 0, 2*Math.PI );  
     } else if (geometry === "SphereGeometry") {
-        geometryToRender = new THREE.SphereGeometry( .2, 32, 16, 0, 2*Math.PI, 0, Math.PI );  
+        geometryToRender = new THREE.SphereGeometry( shrinkValue(formOptions.radius), parseInt(formOptions.widthSegments), parseInt(formOptions.heightSegments), 0, 2*Math.PI, 0, Math.PI );  
     } else if (geometry === "TetrahedronGeometry") {
-        geometryToRender = new THREE.TetrahedronGeometry( .2, 0 );  
+        geometryToRender = new THREE.TetrahedronGeometry( shrinkValue(formOptions.radius), parseInt(formOptions.detail) );  
     } else if (geometry === "TorusGeometry") {
-        geometryToRender = new THREE.TorusGeometry( .2, .05, 16, 100, 2*Math.PI);  
+        geometryToRender = new THREE.TorusGeometry( shrinkValue(formOptions.radius), shrinkValue(formOptions.tube), parseInt(formOptions.radialSegments), parseInt(formOptions.tubularSegments), 2*Math.PI);  
     } else if (geometry === "TorusKnotGeometry") {
-        geometryToRender = new THREE.TorusKnotGeometry( .2, .05, 64, 8, 2, 3 );  
+        geometryToRender = new THREE.TorusKnotGeometry( shrinkValue(formOptions.radius), shrinkValue(formOptions.tube), parseInt(formOptions.tubularSegments), parseInt(formOptions.radialSegments), parseInt(formOptions.p), parseInt(formOptions.q) );  
     } else if (geometry === "TubeGeometry") {
-        const tubePath = new CustomSinCurve(.2);
-        geometryToRender = new THREE.TubeGeometry(tubePath, 64, .05, 8, false);  
+        const tubePath = new CustomSinCurve(.25);
+        geometryToRender = new THREE.TubeGeometry(tubePath, parseInt(formOptions.tubularSegments), shrinkValue(formOptions.radius), parseInt(formOptions.radialSegments), false);  
     } else {
         console.log("context failed?: ", geometry);
     }
