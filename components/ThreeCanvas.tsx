@@ -25,48 +25,59 @@ let camera: THREE.Camera, scene: THREE.Scene, renderer: THREE.WebGLRenderer;
 let geometry: any, material: THREE.Material, mesh: THREE.Mesh;
 
 function init(geometry: string, formOptions: any, wireframe: boolean) {
-    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
-    camera.position.z = 1;
+    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 100 );
+    camera.position.z = 10;
 
     scene = new THREE.Scene();
+
+    let convertedFormOptions: any = {};
+    for (const key in formOptions) {
+        if(key !== "geometry") {
+            convertedFormOptions[key] = parseInt(formOptions[key]);
+        } else {
+            convertedFormOptions[key] = formOptions[key];
+        }
+    }
+    
+    console.log(convertedFormOptions);
 
     let geometryToRender;
 
     if (geometry === "BoxGeometry") {
-        geometryToRender = new THREE.BoxGeometry( shrinkValue(formOptions.width), shrinkValue(formOptions.height), shrinkValue(formOptions.depth), parseInt(formOptions.widthSegments), parseInt(formOptions.heightSegments), parseInt(formOptions.depthSegments));
+        geometryToRender = new THREE.BoxGeometry( convertedFormOptions.width, convertedFormOptions.height, convertedFormOptions.depth, convertedFormOptions.widthSegments, convertedFormOptions.heightSegments, convertedFormOptions.depthSegments);
     } else if (geometry === "CircleGeometry") {
-        geometryToRender = new THREE.CircleGeometry( shrinkValue(formOptions.radius), parseInt(formOptions.segments), 0, 2*Math.PI );
+        geometryToRender = new THREE.CircleGeometry( convertedFormOptions.radius, convertedFormOptions.segments, 0, 2*Math.PI );
     } else if (geometry === "ConeGeometry") {
-        geometryToRender = new THREE.ConeGeometry( shrinkValue(formOptions.radius), shrinkValue(formOptions.height), parseInt(formOptions.radialSegments), parseInt(formOptions.heightSegments), false, 0, 2*Math.PI );  
+        geometryToRender = new THREE.ConeGeometry( convertedFormOptions.radius, convertedFormOptions.height, convertedFormOptions.radialSegments, convertedFormOptions.heightSegments, false, 0, 2*Math.PI );  
     } else if (geometry === "CylinderGeometry") {
-        geometryToRender = new THREE.CylinderGeometry( shrinkValue(formOptions.radiusTop), shrinkValue(formOptions.radiusBottom), shrinkValue(formOptions.height), parseInt(formOptions.radialSegments), parseInt(formOptions.heightSegments), false, 0, 2*Math.PI );  
+        geometryToRender = new THREE.CylinderGeometry( convertedFormOptions.radiusTop, convertedFormOptions.radiusBottom, convertedFormOptions.height, convertedFormOptions.radialSegments, convertedFormOptions.heightSegments, false, 0, 2*Math.PI );  
     } else if (geometry === "DodecahedronGeometry") {
-        geometryToRender = new THREE.DodecahedronGeometry( shrinkValue(formOptions.radius), parseInt(formOptions.detail) );  
+        geometryToRender = new THREE.DodecahedronGeometry( convertedFormOptions.radius, convertedFormOptions.detail );  
     } else if (geometry === "IcosahedronGeometry") {
-        geometryToRender = new THREE.IcosahedronGeometry( shrinkValue(formOptions.radius), parseInt(formOptions.detail) );  
+        geometryToRender = new THREE.IcosahedronGeometry( convertedFormOptions.radius, convertedFormOptions.detail );  
     } else if (geometry === "LatheGeometry") {
         const lathePoints = [];
         for ( let i = 0; i < 10; i ++ ) {
 	        lathePoints.push( new THREE.Vector2( Math.sin( i * 0.05 ) * .25 + .025, ( i - .05 ) * .05 ) );
         }
-        geometryToRender = new THREE.LatheGeometry( lathePoints, formOptions.segments, 0, 2*Math.PI );  
+        geometryToRender = new THREE.LatheGeometry( lathePoints, convertedFormOptions.segments, 0, 2*Math.PI );  
     } else if (geometry === "OctahedronGeometry") {
-        geometryToRender = new THREE.OctahedronGeometry( shrinkValue(formOptions.radius), parseInt(formOptions.detail) );  
+        geometryToRender = new THREE.OctahedronGeometry( convertedFormOptions.radius, convertedFormOptions.detail );  
     } else if (geometry === "PlaneGeometry") {
-        geometryToRender = new THREE.PlaneGeometry( shrinkValue(formOptions.width), shrinkValue(formOptions.height), parseInt(formOptions.widthSegments), parseInt(formOptions.heightSegments) );  
+        geometryToRender = new THREE.PlaneGeometry( convertedFormOptions.width, convertedFormOptions.height, convertedFormOptions.widthSegments, convertedFormOptions.heightSegments );  
     } else if (geometry === "RingGeometry") {
-        geometryToRender = new THREE.RingGeometry( shrinkValue(formOptions.innerRadius), shrinkValue(formOptions.outerRadius), parseInt(formOptions.thetaSegments), parseInt(formOptions.phiSegments), 0, 2*Math.PI );  
+        geometryToRender = new THREE.RingGeometry( convertedFormOptions.innerRadius, convertedFormOptions.outerRadius, convertedFormOptions.thetaSegments, convertedFormOptions.phiSegments, 0, 2*Math.PI );  
     } else if (geometry === "SphereGeometry") {
-        geometryToRender = new THREE.SphereGeometry( shrinkValue(formOptions.radius), parseInt(formOptions.widthSegments), parseInt(formOptions.heightSegments), 0, 2*Math.PI, 0, Math.PI );  
+        geometryToRender = new THREE.SphereGeometry( convertedFormOptions.radius, convertedFormOptions.widthSegments, convertedFormOptions.heightSegments, 0, 2*Math.PI, 0, Math.PI );  
     } else if (geometry === "TetrahedronGeometry") {
-        geometryToRender = new THREE.TetrahedronGeometry( shrinkValue(formOptions.radius), parseInt(formOptions.detail) );  
+        geometryToRender = new THREE.TetrahedronGeometry( convertedFormOptions.radius, convertedFormOptions.detail );  
     } else if (geometry === "TorusGeometry") {
-        geometryToRender = new THREE.TorusGeometry( shrinkValue(formOptions.radius), shrinkValue(formOptions.tube), parseInt(formOptions.radialSegments), parseInt(formOptions.tubularSegments), 2*Math.PI);  
+        geometryToRender = new THREE.TorusGeometry( convertedFormOptions.radius, convertedFormOptions.tube, convertedFormOptions.radialSegments, convertedFormOptions.tubularSegments, 2*Math.PI);  
     } else if (geometry === "TorusKnotGeometry") {
-        geometryToRender = new THREE.TorusKnotGeometry( shrinkValue(formOptions.radius), shrinkValue(formOptions.tube), parseInt(formOptions.tubularSegments), parseInt(formOptions.radialSegments), parseInt(formOptions.p), parseInt(formOptions.q) );  
+        geometryToRender = new THREE.TorusKnotGeometry( convertedFormOptions.radius, convertedFormOptions.tube, convertedFormOptions.tubularSegments, convertedFormOptions.radialSegments, convertedFormOptions.p, convertedFormOptions.q );  
     } else if (geometry === "TubeGeometry") {
         const tubePath = new CustomSinCurve(.25);
-        geometryToRender = new THREE.TubeGeometry(tubePath, parseInt(formOptions.tubularSegments), shrinkValue(formOptions.radius), parseInt(formOptions.radialSegments), false);  
+        geometryToRender = new THREE.TubeGeometry(tubePath, convertedFormOptions.tubularSegments, convertedFormOptions.radius, convertedFormOptions.radialSegments, false);  
     } else {
         console.log("context failed?: ", geometry);
     }
@@ -86,7 +97,7 @@ function init(geometry: string, formOptions: any, wireframe: boolean) {
         antialias: true,
         canvas: canvas
     });
-    renderer.setSize(window.innerWidth * .98, window.innerHeight * .95);
+    renderer.setSize(window.innerWidth * .98, window.innerHeight * .92);
     renderer.setAnimationLoop( animation );
 }
 
@@ -95,10 +106,6 @@ function animation(time: number) {
     mesh.rotation.y = time / 1000;
 
     renderer.render( scene, camera );
-}
-
-function shrinkValue(value:string): number {
-        return (parseInt(value) / 10);
 }
 
 const ThreeCanvas = () => {
@@ -114,7 +121,7 @@ const ThreeCanvas = () => {
     const resizeCanvas = () => {
         renderer.dispose();
         init(geometry, formOptions, wireframe);
-        console.log(`resized to: ${window.innerWidth * .98} ${window.innerHeight * .95}`);
+        console.log(`resized to: ${window.innerWidth * .98} ${window.innerHeight * .92}`);
     }
 
     const delta = 200;

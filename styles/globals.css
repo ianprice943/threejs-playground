@@ -1,6 +1,7 @@
 #__next {
     min-height: 100vh;
     background-color: black;
+    position: relative;
 }
 
 * {
