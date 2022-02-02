@@ -1,15 +1,15 @@
 import React from "react";
 import NumberInput from "./NumberInput";
 
-const ConeOptions = () => {
+const PlaneOptions = () => {
     return (
         <>
-            <NumberInput dimension="radius" min={1} max={5} startingValue={1}/>
+            <NumberInput dimension="width" min={1} max={5} startingValue={1} />
             <NumberInput dimension="height" min={1} max={5} startingValue={1} />
-            <NumberInput dimension="radialSegments" min={1} max={64} startingValue={32} />
+            <NumberInput dimension="widthSegments" min={1} max={64} startingValue={16} />
             <NumberInput dimension="heightSegments" min={1} max={64} startingValue={16} />
         </>
     );
 }
 
-export default ConeOptions;
+export default PlaneOptions;

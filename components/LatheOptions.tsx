@@ -1,10 +1,10 @@
 import React from "react";
 import NumberInput from "./NumberInput";
 
-const LatheOptions: React.FC = () => {
+const LatheOptions = () => {
     return (
         <>
-            <NumberInput dimension="segments" min={1} max={64} />
+            <NumberInput dimension="segments" min={1} max={64} startingValue={32} />
         </>
     );
 }

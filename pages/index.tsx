@@ -3,12 +3,13 @@ import Head from 'next/head'
 import Image from 'next/image'
 import ThreeCanvas from '../components/ThreeCanvas'
 import GeometryForm from '../components/GeometryForm'
-import { CanvasGeometryContext, CanvasFormOptionsContext } from '../contexts/GeometryContext'
+import { CanvasFormOptionsContext, CanvasWireframeContext } from '../contexts/GeometryContext'
 import { useState } from 'react'
 
 const Home: NextPage = () => {
     const [geometry, setGeometry] = useState<string>("BoxGeometry");
     const [formOptions, setFormOptions] = useState<any>({geometry: "BoxGeometry", wireframe: false, width: 1, height: 1, depth: 1, widthSegments: 1, heightSegments: 1, depthSegments: 1});
+    const [wireframe, setWireframe] = useState<boolean>(false);
 
     return (
         <div>
@@ -29,12 +30,12 @@ const Home: NextPage = () => {
                 <meta property="twitter:image" content="" />
             </Head>
             <main className="relative">
-                {/* <CanvasGeometryContext.Provider value={{ geometry, setGeometry }}> */}
-                   <CanvasFormOptionsContext.Provider value={{ formOptions, setFormOptions }}>
+                <CanvasFormOptionsContext.Provider value={{ formOptions, setFormOptions }}>
+                    <CanvasWireframeContext.Provider value={{ wireframe, setWireframe }}>
                         <GeometryForm />
                         <ThreeCanvas />
-                   </CanvasFormOptionsContext.Provider>
-                {/* </CanvasGeometryContext.Provider> */}
+                    </CanvasWireframeContext.Provider>
+                </CanvasFormOptionsContext.Provider>
             </main>
         </div>
     )

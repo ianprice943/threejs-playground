@@ -3,11 +3,12 @@ import React, { useState } from "react";
 interface NumberInputProps {
     dimension: string,
     min: number,
-    max: number
+    max: number,
+    startingValue: number
 }
 
-const NumberInput: React.FC<NumberInputProps> = (props) => {
-    const [dimensionValue, setDimensionValue] = useState(props.min.toString());
+const NumberInput = (props: NumberInputProps) => {
+    const [dimensionValue, setDimensionValue] = useState(props.startingValue.toString());
     
     return (
         <div className="flex pt-2">

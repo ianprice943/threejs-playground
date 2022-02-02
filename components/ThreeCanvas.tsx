@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import * as THREE from "three";
-import { useGeometryContext, useFormOptionsContext } from "../contexts/GeometryContext";
+import { useFormOptionsContext, useWireframeContext } from "../contexts/GeometryContext";
 
 class CustomSinCurve extends THREE.Curve<THREE.Vector3> {
     scale: number;
@@ -23,7 +23,7 @@ class CustomSinCurve extends THREE.Curve<THREE.Vector3> {
 let camera: THREE.Camera, scene: THREE.Scene, renderer: THREE.WebGLRenderer;
 let geometry: any, material: THREE.Material, mesh: THREE.Mesh;
 
-function init(geometry: string, formOptions: any) {
+function init(geometry: string, formOptions: any, wireframe: boolean) {
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
     camera.position.z = 1;
 
@@ -53,7 +53,7 @@ function init(geometry: string, formOptions: any) {
     } else if (geometry === "OctahedronGeometry") {
         geometryToRender = new THREE.OctahedronGeometry( shrinkValue(formOptions.radius), parseInt(formOptions.detail) );  
     } else if (geometry === "PlaneGeometry") {
-        geometryToRender = new THREE.PlaneGeometry( .5, .5, 4, 4 );  
+        geometryToRender = new THREE.PlaneGeometry( shrinkValue(formOptions.width), shrinkValue(formOptions.height), parseInt(formOptions.widthSegments), parseInt(formOptions.heightSegments) );  
     } else if (geometry === "RingGeometry") {
         geometryToRender = new THREE.RingGeometry( .2, .4, 32, 32, 0, 2*Math.PI );  
     } else if (geometry === "SphereGeometry") {
@@ -71,10 +71,8 @@ function init(geometry: string, formOptions: any) {
         console.log("context failed?: ", geometry);
     }
 
-    const useWireframe: boolean = (formOptions?.wireframe === 'on');
-
     const materialOptions = {
-        wireframe: useWireframe
+        wireframe: wireframe
     }
 
     material = new THREE.MeshNormalMaterial(materialOptions);
@@ -110,14 +108,14 @@ function shrinkValue(value:string): number {
         return (parseInt(value) / 10);
 }
 
-const ThreeCanvas: React.FC = () => {
+const ThreeCanvas = () => {
 
-    //const { geometry } = useGeometryContext();
     const { formOptions } = useFormOptionsContext();
+    const { wireframe } = useWireframeContext();
     const geometry = formOptions.geometry;
     
     useEffect(() => {
-        init(geometry, formOptions);
+        init(geometry, formOptions, wireframe);
     });
 
     // const delta = 200;

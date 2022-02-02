@@ -1,19 +1,22 @@
 import React, { FormEvent, useState, useRef } from "react";
 import Draggable from "react-draggable";
-import { useGeometryContext, useFormOptionsContext } from "../contexts/GeometryContext";
+import { useFormOptionsContext, useWireframeContext } from "../contexts/GeometryContext";
 import BoxOptions from "./BoxOptions";
-import CheckboxInput from "./CheckboxInput";
+import CheckboxInput from "./WireframeButtons";
 import CircleOptions from "./CircleOptions";
 import ConeOptions from "./ConeOptions";
 import CylinderOptions from "./CylinderOptions";
 import DodecahedronOptions from "./DodecahedronOptions";
 import IcosahedronOptions from "./IcosahedronOptions";
-import OctahedronOptions from "./IcosahedronOptions copy";
+import OctahedronOptions from "./PlaneOptions";
 import LatheOptions from "./LatheOptions";
+import PlaneOptions from "./PlaneOptions";
+import WireframeButtons from "./WireframeButtons";
 
-const GeometryForm: React.FC = () => {
-    //const { geometry, setGeometry } = useGeometryContext();
+const GeometryForm = () => {
     const { formOptions, setFormOptions } = useFormOptionsContext();
+    const { wireframe, setWireframe } = useWireframeContext();
+    console.log(wireframe);
     const geometry = formOptions.geometry;
 
     const formRef = useRef<HTMLFormElement>(null);
@@ -36,7 +39,6 @@ const GeometryForm: React.FC = () => {
         if (geometry === "BoxGeometry") {
             return {
                 geometry: "BoxGeometry",
-                wireframe: false,
                 width: "1",
                 height: "1",
                 depth: "1",
@@ -47,14 +49,12 @@ const GeometryForm: React.FC = () => {
         } else if (geometry === "CircleGeometry") {
             return {
                 geometry: "CircleGeometry",
-                wireframe: false,
                 radius: "1",
                 segments: "32"
             }
         } else if (geometry === "ConeGeometry") {
             return {
                 geometry: "ConeGeometry",
-                wireframe: false,
                 radius: "1",
                 height: "1",
                 radialSegments: "32",
@@ -64,7 +64,6 @@ const GeometryForm: React.FC = () => {
         } else if(geometry === "CylinderGeometry") {
             return {
                 geometry: "CylinderGeometry",
-                wireframe: false,
                 radiusTop: "1",
                 radiusBottom: "1",
                 height: "2",
@@ -75,14 +74,12 @@ const GeometryForm: React.FC = () => {
         } else if (geometry === "DodecahedronGeometry") {
             return {
                 geometry: "DodecahedronGeometry",
-                wireframe: false,
                 radius: "1",
                 detail: "0"
             }
         } else if (geometry === "IcosahedronGeometry") {
             return {
                 geometry: "IcosahedronGeometry",
-                wireframe: false,
                 radius: "1",
                 detail: "0"
             }
@@ -95,9 +92,16 @@ const GeometryForm: React.FC = () => {
         } else if (geometry === "OctahedronGeometry") {
             return {
                 geometry: "OctahedronGeometry",
-                wireframe: false,
                 radius: "1",
                 detail: "0"
+            }
+        } else if (geometry === "PlaneGeometry") {
+            return {
+                geometry: "PlaneGeometry",
+                width: "1",
+                height: "1",
+                widthSegments: "16",
+                heightSegments: "16"
             }
         } else {
             return {}
@@ -122,11 +126,15 @@ const GeometryForm: React.FC = () => {
         geometryOptions = <LatheOptions />
     } else if (geometry === "OctahedronGeometry") {
         geometryOptions = <OctahedronOptions />
-    }
+    } else if (geometry === "PlaneGeometry") {
+        geometryOptions = <PlaneOptions />
+    } 
+
+
 
     return (
         <Draggable nodeRef={formRef}>
-            <form ref={formRef} onChange={handleFormInput} className="absolute flex flex-col p-2 bg-slate-400 bg-opacity-70 hover:cursor-pointer">
+            <form ref={formRef} onChange={handleFormInput} className="absolute flex flex-col p-4 bg-slate-400 bg-opacity-70">
                 <div>
                     <label htmlFor="geometry">Geometry: </label>
                     <select name="geometry" id="">
@@ -146,7 +154,7 @@ const GeometryForm: React.FC = () => {
                         <option value="TorusKnotGeometry">Torus Knot</option>
                         <option value="TubeGeometry">Tube</option>
                     </select>
-                    <CheckboxInput label="wireframe" isChecked={false} />
+                    <WireframeButtons isWireframe={false} onChange={setWireframe} />
                     {geometryOptions}
                 </div>
             </form>

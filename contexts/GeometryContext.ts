@@ -1,17 +1,5 @@
 import React, { useContext } from 'react';
 
-export type GeometryContext = {
-    geometry: string,
-    setGeometry: (newGeometry: string) => void
-}
-
-export const CanvasGeometryContext = React.createContext<GeometryContext>({
-    geometry: "BoxGeometry",
-    setGeometry: () => {}
-});
-
-export const useGeometryContext = () => useContext(CanvasGeometryContext);
-
 export interface FormOptions {
     [key: string]: any
 }
@@ -27,3 +15,15 @@ export const CanvasFormOptionsContext = React.createContext<FormOptionsContext>(
 });
 
 export const useFormOptionsContext = () => useContext(CanvasFormOptionsContext);
+
+export type WireframeContext = {
+    wireframe: boolean,
+    setWireframe: (newWireframe: boolean) => void
+}
+
+export const CanvasWireframeContext = React.createContext<WireframeContext>({
+    wireframe: false,
+    setWireframe: () => {}
+});
+
+export const useWireframeContext = () => useContext(CanvasWireframeContext);
