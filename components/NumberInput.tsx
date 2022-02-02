@@ -13,7 +13,7 @@ const NumberInput = (props: NumberInputProps) => {
     return (
         <div className="flex mt-2">
             <label htmlFor={props.dimension} className="pr-2">{props.dimension}</label>
-            <input className="ml-auto" type="number" id={props.dimension} name={props.dimension} value={dimensionValue} min={props.min} max={props.max} onChange={e => setDimensionValue(e.target.value)}></input>
+            <input className="ml-auto bg-transparent border-2 border-white rounded-md" type="number" id={props.dimension} name={props.dimension} value={dimensionValue} min={props.min} max={props.max} onChange={e => setDimensionValue(e.target.value)}></input>
         </div>
     )
 }

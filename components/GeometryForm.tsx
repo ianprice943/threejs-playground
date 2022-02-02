@@ -205,15 +205,15 @@ const GeometryForm = () => {
 
     return (
         <Draggable handle=".drag-handle" >
-            <div className="absolute bg-slate-400 bg-opacity-70">
+            <div className="absolute bg-slate-400 bg-opacity-50 text-white">
                 <div className="flex justify-center px-4 my-2">
-                    <span className="drag-handle border-2 border-white rounded-md p-1 hover:cursor-pointer" aria-label="Click/Tap and hold to drag the form to a different place on screen.">Drag Form</span>
+                    <span className="drag-handle border-2 border-white rounded-md p-1 hover:cursor-pointer" role="button">Drag Form</span>
                     <button ref={buttonRef} className="p-1 ml-4 border-2 border-white rounded-md" onClick={toggleFormHide}>Hide Form</button>
                 </div>
                 <form ref={formRef} onChange={handleFormInput} className="flex flex-col p-4 pt-0">
                     <div className="flex">
                         <label htmlFor="geometry">Geometry:&nbsp;</label>
-                        <select className="ml-auto" name="geometry" tabIndex={0}>
+                        <select className="ml-auto border-2 border-white rounded-md" name="geometry" id="geometry" tabIndex={0}>
                             <option value="BoxGeometry">Box</option>
                             <option value="CircleGeometry">Circle</option>
                             <option value="ConeGeometry">Cone</option>

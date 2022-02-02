@@ -12,3 +12,10 @@
 .hide {
     display: none;
 }
+
+select {
+    background-color: transparent;
+}
+select > option {
+    background-color: #4A525C;
+}
