@@ -131,10 +131,10 @@ const GeometryForm = () => {
     return (
         <Draggable handle=".drag-handle" >
             <form onChange={handleFormInput} className="absolute flex flex-col p-4 pt-0 bg-slate-400 bg-opacity-70">
-                <span className="drag-handle border-2 border-white p-1 hover:cursor-pointer mb-2" aria-label="click and hold to drag the form to a different place on screen">Click/Tap and Hold to drag me around</span>
-                <div>
+                <span className="drag-handle border-2 border-white p-1 hover:cursor-pointer mb-2" aria-label="Click/Tap and hold to drag the form to a different place on screen.">Click/Tap and Hold here to drag the form</span>
+                <div className="flex">
                     <label htmlFor="geometry">Geometry: </label>
-                    <select name="geometry" id="">
+                    <select className="ml-auto" name="geometry" tabIndex={0}>
                         <option value="BoxGeometry">Box</option>
                         <option value="CircleGeometry">Circle</option>
                         <option value="ConeGeometry">Cone</option>
@@ -151,9 +151,9 @@ const GeometryForm = () => {
                         <option value="TorusKnotGeometry">Torus Knot</option>
                         <option value="TubeGeometry">Tube</option>
                     </select>
-                    <WireframeButtons isWireframe={false} onChange={setWireframe} />
-                    {geometryOptions}
                 </div>
+                <WireframeButtons isWireframe={false} onChange={setWireframe} />
+                {geometryOptions}
             </form>
         </Draggable>
     )
