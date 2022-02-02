@@ -2,7 +2,6 @@ import React, { FormEvent, useState, useRef } from "react";
 import Draggable from "react-draggable";
 import { useFormOptionsContext, useWireframeContext } from "../contexts/GeometryContext";
 import BoxOptions from "./BoxOptions";
-import CheckboxInput from "./WireframeButtons";
 import CircleOptions from "./CircleOptions";
 import ConeOptions from "./ConeOptions";
 import CylinderOptions from "./CylinderOptions";
@@ -16,10 +15,7 @@ import WireframeButtons from "./WireframeButtons";
 const GeometryForm = () => {
     const { formOptions, setFormOptions } = useFormOptionsContext();
     const { wireframe, setWireframe } = useWireframeContext();
-    console.log(wireframe);
     const geometry = formOptions.geometry;
-
-    const formRef = useRef<HTMLFormElement>(null);
 
     const handleFormInput = (event: FormEvent) => {
         event.preventDefault();
@@ -133,8 +129,9 @@ const GeometryForm = () => {
 
 
     return (
-        <Draggable nodeRef={formRef}>
-            <form ref={formRef} onChange={handleFormInput} className="absolute flex flex-col p-4 bg-slate-400 bg-opacity-70">
+        <Draggable handle=".drag-handle" >
+            <form onChange={handleFormInput} className="absolute flex flex-col p-4 pt-0 bg-slate-400 bg-opacity-70">
+                <span className="drag-handle border-2 border-white p-1 hover:cursor-pointer mb-2" aria-label="click and hold to drag the form to a different place on screen">Click/Tap and Hold to drag me around</span>
                 <div>
                     <label htmlFor="geometry">Geometry: </label>
                     <select name="geometry" id="">
