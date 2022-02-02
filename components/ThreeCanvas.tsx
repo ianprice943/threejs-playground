@@ -31,7 +31,6 @@ function init(geometry: string, formOptions: any, wireframe: boolean) {
     scene = new THREE.Scene();
 
     let geometryToRender;
-    console.log(formOptions);
 
     if (geometry === "BoxGeometry") {
         geometryToRender = new THREE.BoxGeometry( shrinkValue(formOptions.width), shrinkValue(formOptions.height), shrinkValue(formOptions.depth), parseInt(formOptions.widthSegments), parseInt(formOptions.heightSegments), parseInt(formOptions.depthSegments));
