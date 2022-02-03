@@ -50,12 +50,12 @@ function init(geometry: string, formOptions: any, wireframe: boolean) {
         geometryToRender = new THREE.DodecahedronGeometry( convertedFormOptions.radius, convertedFormOptions.detail );  
     } else if (geometry === "IcosahedronGeometry") {
         geometryToRender = new THREE.IcosahedronGeometry( convertedFormOptions.radius, convertedFormOptions.detail );  
-    } else if (geometry === "LatheGeometry") {
-        const lathePoints = [];
-        for ( let i = 0; i < 10; i ++ ) {
-	        lathePoints.push( new THREE.Vector2( Math.sin( i * 0.05 ) * .25 + .025, ( i - .05 ) * .05 ) );
-        }
-        geometryToRender = new THREE.LatheGeometry( lathePoints, convertedFormOptions.segments, 0, 2*Math.PI );  
+    // } else if (geometry === "LatheGeometry") {
+    //     const lathePoints = [];
+    //     for ( let i = 0; i < 10; i ++ ) {
+	//         lathePoints.push( new THREE.Vector2( Math.sin( i * 0.5 ) * 2.5 + .25, ( i - .5 ) * .5 ) );
+    //     }
+    //     geometryToRender = new THREE.LatheGeometry( lathePoints, convertedFormOptions.segments, 0, 2*Math.PI );  
     } else if (geometry === "OctahedronGeometry") {
         geometryToRender = new THREE.OctahedronGeometry( convertedFormOptions.radius, convertedFormOptions.detail );  
     } else if (geometry === "PlaneGeometry") {

@@ -193,8 +193,8 @@ const GeometryForm = () => {
         geometryOptions = <DodecahedronOptions />
     } else if (geometry === "IcosahedronGeometry") {
         geometryOptions = <IcosahedronOptions />
-    } else if (geometry === "LatheGeometry") {
-        geometryOptions = <LatheOptions />
+    // } else if (geometry === "LatheGeometry") {
+    //     geometryOptions = <LatheOptions />
     } else if (geometry === "OctahedronGeometry") {
         geometryOptions = <OctahedronOptions />
     } else if (geometry === "PlaneGeometry") {
@@ -243,7 +243,7 @@ const GeometryForm = () => {
                             <option value="CylinderGeometry">Cylinder</option>
                             <option value="DodecahedronGeometry">Dodecahedron</option>
                             <option value="IcosahedronGeometry">Icosahedron</option>
-                            <option value="LatheGeometry">Lathe</option>
+                            {/* <option value="LatheGeometry">Lathe</option> */}
                             <option value="OctahedronGeometry">Octahedron</option>
                             <option value="PlaneGeometry">Plane</option>
                             <option value="RingGeometry">Ring</option>
