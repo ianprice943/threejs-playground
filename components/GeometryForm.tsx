@@ -47,7 +47,6 @@ const GeometryForm = () => {
             const curKey = curInput.getAttribute('name');
             let curValue = formEntries.get(curKey as string) as unknown as number;
             curValue = isNaN(curValue) ? min : curValue;
-            console.log(`${curValue}, ${min}, ${max}, ${curKey}`);
             if(curValue !== null && min !== null && curValue < min) {
                 console.log("clamping min");
                 curValue = min;
@@ -58,7 +57,6 @@ const GeometryForm = () => {
             if(curKey !== null && curValue !== null) {
                 formEntries.set(curKey, curValue.toString());
             }
-            console.log(`${curValue}, ${min}, ${max}, ${curKey}`);
         }
 
         return formEntries;
