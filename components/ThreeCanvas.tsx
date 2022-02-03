@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import * as THREE from "three";
 import { useFormOptionsContext, useWireframeContext } from "../contexts/GeometryContext";
-import { parse } from "path/posix";
 
 class CustomSinCurve extends THREE.Curve<THREE.Vector3> {
     scale: number;
