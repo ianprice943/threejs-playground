@@ -38,6 +38,8 @@ function init(geometry: string, formOptions: any, wireframe: boolean) {
         }
     }
     
+    console.log(convertedFormOptions);
+
     let geometryToRender;
 
     if (geometry === "BoxGeometry") {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 interface NumberInputProps {
     dimension: string,
@@ -10,17 +10,19 @@ interface NumberInputProps {
 const NumberInput = (props: NumberInputProps) => {
     const [dimensionValue, setDimensionValue] = useState(props.startingValue.toString());
 
-    const clamp = (event: any) => {
-        const value = event.target.value;
-        const min = event.target.min;
-        const max = event.target.max;
-        console.log(`value: ${value}, min: ${min}, max: ${max}`);
-        if (value === "" || value < min) {
-            setDimensionValue(min);
+    const clamp = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value === "" ? NaN : parseInt(event.target.value);
+        const min = parseInt(event.target.min);
+        const max = parseInt(event.target.max);
+
+        if (isNaN(value)) {
+            setDimensionValue(min.toString());
+        } else if (value < min) {
+            setDimensionValue(min.toString());
         } else if (value > max) {
-            setDimensionValue(max);
+            setDimensionValue(max.toString());
         } else {
-            setDimensionValue(value);
+            setDimensionValue(value.toString());
         }
     }
     
