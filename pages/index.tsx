@@ -40,8 +40,8 @@ const Home: NextPage = () => {
                     </CanvasWireframeContext.Provider>
                 </CanvasFormOptionsContext.Provider>
             </main>
-            <footer className="text-center absolute left-0 right-0 bottom-0">
-                <p className="text-white">Check the code out here: <a className="underline" href="https://github.com/ianprice943/threejs-playground">https://github.com/ianprice943/threejs-playground</a></p>
+            <footer className="text-center">
+                <p className="text-white">Check the code out <a className="underline" href="https://github.com/ianprice943/threejs-playground">here</a></p>
             </footer>
         </div>
     )

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import * as THREE from "three";
 import { useFormOptionsContext, useWireframeContext } from "../contexts/GeometryContext";
-import { parse } from "path/posix";
 
 class CustomSinCurve extends THREE.Curve<THREE.Vector3> {
     scale: number;
@@ -21,8 +20,8 @@ class CustomSinCurve extends THREE.Curve<THREE.Vector3> {
 	}
 }
 
-let camera: THREE.Camera, scene: THREE.Scene, renderer: THREE.WebGLRenderer;
-let geometry: any, material: THREE.Material, mesh: THREE.Mesh;
+let camera: THREE.PerspectiveCamera, scene: THREE.Scene, renderer: THREE.WebGLRenderer;
+let geometryToRender: any, material: THREE.Material, mesh: THREE.Mesh;
 
 function init(geometry: string, formOptions: any, wireframe: boolean) {
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 100 );
@@ -39,7 +38,9 @@ function init(geometry: string, formOptions: any, wireframe: boolean) {
         }
     }
     
-    let geometryToRender;
+    console.log(convertedFormOptions);
+
+    //let geometryToRender;
 
     if (geometry === "BoxGeometry") {
         geometryToRender = new THREE.BoxGeometry( convertedFormOptions.width, convertedFormOptions.height, convertedFormOptions.depth, convertedFormOptions.widthSegments, convertedFormOptions.heightSegments, convertedFormOptions.depthSegments);
@@ -117,8 +118,9 @@ const ThreeCanvas = () => {
     });
 
     const resizeCanvas = () => {
-        renderer.dispose();
-        init(geometry, formOptions, wireframe);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth * .98, window.innerHeight * .92);
     }
 
     const delta = 200;

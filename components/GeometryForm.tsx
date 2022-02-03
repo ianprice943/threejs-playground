@@ -26,7 +26,8 @@ const GeometryForm = () => {
     const handleFormInput = (event: FormEvent) => {
         event.preventDefault();
         const formEl: HTMLFormElement = event.currentTarget as HTMLFormElement;
-        const formEntries = new FormData(formEl);
+        let formEntries = new FormData(formEl);
+        formEntries = clampFormData(formEl, formEntries);
         const formData = Object.fromEntries(formEntries.entries());
 
         if(formData.geometry !== geometry) {
@@ -35,6 +36,30 @@ const GeometryForm = () => {
         } else {
             setFormOptions(formData);
         }
+    }
+
+    const clampFormData = (formEl: HTMLFormElement, formEntries: FormData) => {
+        //formEl.children[0] and 1 can be skipped since they're always the drop down and wireframe buttons
+        for(let i = 2; i < formEl.children.length; i++) {
+            const curInput = formEl.children[i].children[1];
+            const min = parseInt(curInput.getAttribute('min') as string);
+            const max = parseInt(curInput.getAttribute('max') as string);
+            const curKey = curInput.getAttribute('name');
+            let curValue = formEntries.get(curKey as string) as unknown as number;
+            curValue = isNaN(curValue) ? min : curValue;
+            if(curValue !== null && min !== null && curValue < min) {
+                console.log("clamping min");
+                curValue = min;
+            } else if (curValue !== null && max !== null && curValue > max) {
+                console.log("clamping max");
+                curValue = max;
+            }
+            if(curKey !== null && curValue !== null) {
+                formEntries.set(curKey, curValue.toString());
+            }
+        }
+
+        return formEntries;
     }
 
     const setDefaults = (geometry: string) => {
