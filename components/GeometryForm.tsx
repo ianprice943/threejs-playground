@@ -48,10 +48,8 @@ const GeometryForm = () => {
             let curValue = formEntries.get(curKey as string) as unknown as number;
             curValue = isNaN(curValue) ? min : curValue;
             if(curValue !== null && min !== null && curValue < min) {
-                console.log("clamping min");
                 curValue = min;
             } else if (curValue !== null && max !== null && curValue > max) {
-                console.log("clamping max");
                 curValue = max;
             }
             if(curKey !== null && curValue !== null) {

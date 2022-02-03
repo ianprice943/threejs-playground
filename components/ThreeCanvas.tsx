@@ -37,10 +37,6 @@ function init(geometry: string, formOptions: any, wireframe: boolean) {
             convertedFormOptions[key] = formOptions[key];
         }
     }
-    
-    console.log(convertedFormOptions);
-
-    //let geometryToRender;
 
     if (geometry === "BoxGeometry") {
         geometryToRender = new THREE.BoxGeometry( convertedFormOptions.width, convertedFormOptions.height, convertedFormOptions.depth, convertedFormOptions.widthSegments, convertedFormOptions.heightSegments, convertedFormOptions.depthSegments);
