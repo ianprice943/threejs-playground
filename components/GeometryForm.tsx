@@ -7,8 +7,8 @@ import ConeOptions from "./ConeOptions";
 import CylinderOptions from "./CylinderOptions";
 import DodecahedronOptions from "./DodecahedronOptions";
 import IcosahedronOptions from "./IcosahedronOptions";
-import OctahedronOptions from "./PlaneOptions";
-import LatheOptions from "./LatheOptions";
+import OctahedronOptions from "./OctahedronOptions";
+// import LatheOptions from "./LatheOptions";
 import PlaneOptions from "./PlaneOptions";
 import WireframeButtons from "./WireframeButtons";
 import RingOptions from "./RingOptions";
@@ -108,12 +108,12 @@ const GeometryForm = () => {
                 radius: "1",
                 detail: "0"
             }
-        } else if (geometry === "LatheGeometry") {
-            return {
-                geometry: "LatheGeometry",
-                wireframe: false,
-                segments: "32",
-            }
+        // } else if (geometry === "LatheGeometry") {
+        //     return {
+        //         geometry: "LatheGeometry",
+        //         wireframe: false,
+        //         segments: "32",
+        //     }
         } else if (geometry === "OctahedronGeometry") {
             return {
                 geometry: "OctahedronGeometry",
