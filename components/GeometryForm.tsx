@@ -40,7 +40,7 @@ const GeometryForm = () => {
 
     const clampFormData = (formEl: HTMLFormElement, formEntries: FormData) => {
         //formEl.children[0] and 1 can be skipped since they're always the drop down and wireframe buttons
-        for(let i = 2; i < formEl.children.length; i++) {
+        for(let i = 3; i < formEl.children.length; i++) {
             const curInput = formEl.children[i].children[1];
             const min = parseInt(curInput.getAttribute('min') as string);
             const max = parseInt(curInput.getAttribute('max') as string);
@@ -255,6 +255,7 @@ const GeometryForm = () => {
                         </select>
                     </div>
                     <WireframeButtons isWireframe={false} onChange={setWireframe} />
+                    <div className="flex flex-row justify-end mt-2" aria-label="min and max header for subsequent number inputs"><span>Min-Max</span></div>
                     {geometryOptions}
                 </form>
             </div>
