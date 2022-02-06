@@ -25,11 +25,16 @@ const NumberInput = (props: NumberInputProps) => {
             setDimensionValue(value.toString());
         }
     }
+
     
     return (
         <div className="flex mt-2">
             <label htmlFor={props.dimension} className="pr-2">{props.dimension}</label>
-            <input className="ml-auto bg-transparent border-2 border-white rounded-md" type="number" id={props.dimension} name={props.dimension} value={dimensionValue} min={props.min} max={props.max} onChange={e => clamp(e)}></input>
+            <input className="ml-auto bg-transparent border-2 border-white rounded-md w-1/5" type="number" id={props.dimension} name={props.dimension} value={dimensionValue} min={props.min} max={props.max} onChange={e => clamp(e)}></input>
+            <div className="pl-2 w-1/5">
+                <span className="pr-2">{props.min}</span>
+                <span>{props.max}</span>
+            </div>
         </div>
     )
 }
