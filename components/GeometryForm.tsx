@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, useRef } from "react";
+import React, { FormEvent, useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
 import { useFormOptionsContext, useWireframeContext } from "../contexts/GeometryContext";
 import BoxOptions from "./BoxOptions";
@@ -21,7 +21,8 @@ import TubeOptions from "./TubeOptions";
 const GeometryForm = () => {
     const { formOptions, setFormOptions } = useFormOptionsContext();
     const { wireframe, setWireframe } = useWireframeContext();
-    const geometry = formOptions.geometry;
+    let geometry = formOptions.geometry;
+    const [geometryOptions, setGeometryOptions] = useState<JSX.Element>(<></>);
 
     const handleFormInput = (event: FormEvent) => {
         event.preventDefault();
@@ -40,8 +41,9 @@ const GeometryForm = () => {
 
     const clampFormData = (formEl: HTMLFormElement, formEntries: FormData) => {
         //formEl.children[0] and 1 can be skipped since they're always the drop down and wireframe buttons
-        for(let i = 3; i < formEl.children.length; i++) {
+        for(let i = 3; i < formEl.children.length - 1; i++) {
             const curInput = formEl.children[i].children[1];
+            console.log('curInput', curInput)
             const min = parseInt(curInput.getAttribute('min') as string);
             const max = parseInt(curInput.getAttribute('max') as string);
             const curKey = curInput.getAttribute('name');
@@ -58,6 +60,12 @@ const GeometryForm = () => {
         }
 
         return formEntries;
+    }
+
+    const updateFormOptionsFromNewGeometry = (e: any) => {
+        console.log('value', e?.target?.value);
+        const newGeometryData = setDefaults(e?.target?.value);
+        setFormOptions(newGeometryData);
     }
 
     const setDefaults = (geometry: string) => {
@@ -179,39 +187,38 @@ const GeometryForm = () => {
         }
     }
 
-    let geometryOptions;
-
-    if (geometry === "BoxGeometry") {
-        geometryOptions = <BoxOptions />
-    } else if (geometry === "CircleGeometry") {
-        geometryOptions = <CircleOptions />
-    } else if (geometry === "ConeGeometry") {
-        geometryOptions = <ConeOptions />
-    } else if (geometry === "CylinderGeometry") {
-        geometryOptions = <CylinderOptions />
-    } else if (geometry === "DodecahedronGeometry") {
-        geometryOptions = <DodecahedronOptions />
-    } else if (geometry === "IcosahedronGeometry") {
-        geometryOptions = <IcosahedronOptions />
-    // } else if (geometry === "LatheGeometry") {
-    //     geometryOptions = <LatheOptions />
-    } else if (geometry === "OctahedronGeometry") {
-        geometryOptions = <OctahedronOptions />
-    } else if (geometry === "PlaneGeometry") {
-        geometryOptions = <PlaneOptions />
-    } else if (geometry === "RingGeometry") {
-        geometryOptions = <RingOptions />
-    } else if (geometry === "SphereGeometry") {
-        geometryOptions = <SphereOptions />
-    } else if (geometry === "TetrahedronGeometry") {
-        geometryOptions = <TetrahedronOptions />
-    } else if (geometry === "TorusGeometry") {
-        geometryOptions = <TorusOptions />
-    } else if (geometry === "TorusKnotGeometry") {
-        geometryOptions = <TorusKnotOptions />
-    } else if (geometry === "TubeGeometry") {
-        geometryOptions = <TubeOptions />
-    }
+    // let geometryOptions;
+    useEffect(() => {
+        if (geometry === "BoxGeometry") {
+            setGeometryOptions(<BoxOptions />);
+        } else if (geometry === "CircleGeometry") {
+            setGeometryOptions(<CircleOptions />);
+        } else if (geometry === "ConeGeometry") {
+            setGeometryOptions(<ConeOptions />);
+        } else if (geometry === "CylinderGeometry") {
+            setGeometryOptions(<CylinderOptions />);
+        } else if (geometry === "DodecahedronGeometry") {
+            setGeometryOptions(<DodecahedronOptions />);
+        } else if (geometry === "IcosahedronGeometry") {
+            setGeometryOptions(<IcosahedronOptions />);
+        } else if (geometry === "OctahedronGeometry") {
+            setGeometryOptions(<OctahedronOptions />);
+        } else if (geometry === "PlaneGeometry") {
+            setGeometryOptions(<PlaneOptions />);
+        } else if (geometry === "RingGeometry") {
+            setGeometryOptions(<RingOptions />);
+        } else if (geometry === "SphereGeometry") {
+            setGeometryOptions(<SphereOptions />);
+        } else if (geometry === "TetrahedronGeometry") {
+            setGeometryOptions(<TetrahedronOptions />);
+        } else if (geometry === "TorusGeometry") {
+            setGeometryOptions(<TorusOptions />);
+        } else if (geometry === "TorusKnotGeometry") {
+            setGeometryOptions(<TorusKnotOptions />);
+        } else if (geometry === "TubeGeometry") {
+            setGeometryOptions(<TubeOptions />);
+        }
+    }, [geometry]);
 
     const formRef = useRef<HTMLFormElement>(null!);
     const buttonRef = useRef<HTMLButtonElement>(null!);
@@ -233,17 +240,22 @@ const GeometryForm = () => {
                     <span className="drag-handle border-2 border-white rounded-md p-1 hover:cursor-pointer" role="button">Drag Form</span>
                     <button ref={buttonRef} className="p-1 ml-4 border-2 border-white rounded-md" onClick={toggleFormHide}>Hide Form</button>
                 </div>
-                <form ref={formRef} onChange={handleFormInput} className="flex flex-col p-4 pt-0">
+                <form ref={formRef} onSubmit={handleFormInput} className="flex flex-col p-4 pt-0">
                     <div className="flex">
                         <label htmlFor="geometry">Geometry:&nbsp;</label>
-                        <select className="ml-auto border-2 border-white rounded-md" name="geometry" id="geometry" tabIndex={0}>
+                        <select
+                            className="ml-auto border-2 border-white rounded-md"
+                            name="geometry"
+                            id="geometry"
+                            tabIndex={0}
+                            onChange={updateFormOptionsFromNewGeometry}
+                        >
                             <option value="BoxGeometry">Box</option>
                             <option value="CircleGeometry">Circle</option>
                             <option value="ConeGeometry">Cone</option>
                             <option value="CylinderGeometry">Cylinder</option>
                             <option value="DodecahedronGeometry">Dodecahedron</option>
                             <option value="IcosahedronGeometry">Icosahedron</option>
-                            {/* <option value="LatheGeometry">Lathe</option> */}
                             <option value="OctahedronGeometry">Octahedron</option>
                             <option value="PlaneGeometry">Plane</option>
                             <option value="RingGeometry">Ring</option>
@@ -257,6 +269,7 @@ const GeometryForm = () => {
                     <WireframeButtons isWireframe={false} onChange={setWireframe} />
                     <div className="flex flex-row justify-end mt-2" aria-label="min and max header for subsequent number inputs"><span>Min-Max</span></div>
                     {geometryOptions}
+                    <button type="submit" aria-label="submit the form to rerender the geometry" className="mt-2 bg-blue-600 rounded-md border-2 border-transparent hover:border-white">Apply New Geometry</button>
                 </form>
             </div>
         </Draggable>
